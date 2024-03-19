@@ -1,17 +1,21 @@
 import CryptoJS from 'crypto-js';
 
 export default {
-  async fetch(request: Request, _env: Env, _ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
-    const proxyUrlBase64 = url.searchParams.get('proxyUrlBase64'); // get a query param value (?proxyUrl=...)
-
-    if (!proxyUrlBase64) {
-      return new Response('Bad request: Missing `proxyUrlBase64` query param', { status: 400 });
+    const proxyUrl = url.searchParams.get('proxyUrl'); // get a query param value (?proxyUrl=...)
+    if (!proxyUrl) {
+      return new Response('Bad request: Missing `proxyUrl` query param', { status: 400 });
     }
-    const proxyUrl = atob(proxyUrlBase64);
 
-    let res = await fetchAndApply(proxyUrl, request);
+    const secretKey = env.secretKey;
+    const decryptedBytes = CryptoJS.AES.decrypt(decodeURIComponent(proxyUrl), secretKey);
+    const decryptedData = decryptedBytes.toString(CryptoJS.enc.Utf8);
+
+    console.log(decryptedData);
+
+    let res = await fetchAndApply(decryptedData, request);
 
     return res;
   },
