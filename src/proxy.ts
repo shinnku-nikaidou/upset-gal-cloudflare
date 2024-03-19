@@ -28,6 +28,7 @@ async function fetchAndApply(proxyUrl: string, request: Request): Promise<Respon
   let new_request_headers = new Headers(request.headers);
   new_request_headers.set('Host', f_url.host);
   new_request_headers.set('Referer', request.url);
+  new_request_headers.set('Accept-Encoding', 'gzip');
 
   response = await fetch(f_url.href, {
     method: request.method,
@@ -39,6 +40,7 @@ async function fetchAndApply(proxyUrl: string, request: Request): Promise<Respon
   if (out_headers.get('Content-Disposition') == 'attachment') {
     out_headers.delete('Content-Disposition');
   }
+
   let out_body: BodyInit | null | undefined = null;
 
   const contentType = out_headers.get('Content-Type')!;
