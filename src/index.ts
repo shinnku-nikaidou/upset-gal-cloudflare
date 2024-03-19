@@ -11,6 +11,7 @@
 import handleProxy from './proxy';
 import handleRedirect from './redirect';
 import apiRouter from './router';
+import testReact from './test';
 
 // Export a default object containing event handlers
 export default {
@@ -27,6 +28,9 @@ export default {
 
       case '/proxy':
         return handleProxy.fetch(request, env, ctx);
+
+      case '/test':
+        return testReact.fetch(request, env, ctx);
     }
 
     if (url.pathname.startsWith('/api/')) {

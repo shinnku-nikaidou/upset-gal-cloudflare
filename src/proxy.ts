@@ -1,3 +1,5 @@
+import CryptoJS from 'crypto-js';
+
 export default {
   async fetch(request: Request, _env: Env, _ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
@@ -16,21 +18,16 @@ export default {
 };
 
 async function fetchAndApply(proxyUrl: string, request: Request): Promise<Response> {
-  console.log(proxyUrl, request);
-  let f_url = new URL(proxyUrl);
+  const f_url = new URL(proxyUrl);
   let response = null;
 
-  let method = request.method;
-  console.log('method=', method);
-  let body = request.body;
-  let request_headers = request.headers;
-  let new_request_headers = new Headers(request_headers);
+  let new_request_headers = new Headers(request.headers);
   new_request_headers.set('Host', f_url.host);
   new_request_headers.set('Referer', request.url);
 
   response = await fetch(f_url.href, {
-    method: method,
-    body: body,
+    method: request.method,
+    body: request.body,
     headers: new_request_headers,
   });
 

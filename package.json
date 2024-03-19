@@ -1,7 +1,7 @@
 {
   "name": "upset-gal-cloudflare",
-  "version": "0.0.0",
-  "private": true,
+  "version": "1.0.0",
+  "private": false,
   "scripts": {
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
@@ -9,8 +9,16 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240314.0",
+    "@types/crypto-js": "^4.2.2",
+    "@types/react": "^18.2.67",
+    "@types/react-dom": "^18.2.22",
     "itty-router": "^3.0.12",
     "typescript": "^5.0.4",
     "wrangler": "^3.0.0"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
