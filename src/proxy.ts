@@ -1,5 +1,5 @@
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request, _env: Env, _ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
     const proxyUrlBase64 = url.searchParams.get('proxyUrlBase64'); // get a query param value (?proxyUrl=...)
